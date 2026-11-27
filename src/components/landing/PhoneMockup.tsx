@@ -1,27 +1,47 @@
 import { Camera, Check, ScanLine, Zap } from "lucide-react";
 import { resultPreview } from "@/content/landing";
 
-// 스티커 속 비즈 위치와 잔광 속도(빠름·보통·느림). 스티커와 폰 화면에서 같이 써요.
-const beads: { x: number; y: number; s: number; speed: "fast" | "mid" | "slow" }[] = [
-  { x: 14, y: 18, s: 9, speed: "slow" }, { x: 38, y: 12, s: 6, speed: "fast" }, { x: 66, y: 20, s: 8, speed: "mid" },
-  { x: 84, y: 34, s: 6, speed: "fast" }, { x: 24, y: 42, s: 7, speed: "mid" }, { x: 52, y: 40, s: 10, speed: "slow" },
-  { x: 76, y: 58, s: 7, speed: "slow" }, { x: 12, y: 66, s: 6, speed: "fast" }, { x: 40, y: 64, s: 8, speed: "fast" },
-  { x: 60, y: 78, s: 6, speed: "mid" }, { x: 30, y: 86, s: 7, speed: "slow" }, { x: 86, y: 84, s: 8, speed: "mid" },
+// 스티커 속 형광 비즈: 위치, 크기, 잔광 속도(빠름·보통·느림), 색(초록~노랑).
+// 스티커와 폰 화면에서 같이 써요.
+const beads: { x: number; y: number; s: number; speed: "fast" | "mid" | "slow"; c: number }[] = [
+  { x: 14, y: 18, s: 9, speed: "slow", c: 0 }, { x: 38, y: 12, s: 6, speed: "fast", c: 2 }, { x: 66, y: 20, s: 8, speed: "mid", c: 1 },
+  { x: 84, y: 34, s: 6, speed: "fast", c: 3 }, { x: 24, y: 42, s: 7, speed: "mid", c: 2 }, { x: 52, y: 40, s: 10, speed: "slow", c: 1 },
+  { x: 76, y: 58, s: 7, speed: "slow", c: 0 }, { x: 12, y: 66, s: 6, speed: "fast", c: 1 }, { x: 40, y: 64, s: 8, speed: "fast", c: 3 },
+  { x: 60, y: 78, s: 6, speed: "mid", c: 0 }, { x: 30, y: 86, s: 7, speed: "slow", c: 2 }, { x: 86, y: 84, s: 8, speed: "mid", c: 1 },
+  { x: 48, y: 22, s: 5, speed: "mid", c: 3 }, { x: 70, y: 40, s: 5, speed: "fast", c: 0 }, { x: 22, y: 26, s: 5, speed: "fast", c: 1 },
 ];
 const beadClass = { fast: "hero-bead-fast", mid: "hero-bead-mid", slow: "hero-bead-slow" };
+// 형광 입자 색: 연두 · 라임 · 노랑빛 초록 · 초록
+const phosphor = [
+  { core: "#d9f99d", glow: "rgba(190,242,100,0.85)" },
+  { core: "#bef264", glow: "rgba(163,230,53,0.85)" },
+  { core: "#ecfccb", glow: "rgba(234,250,120,0.85)" },
+  { core: "#a3e635", glow: "rgba(132,204,22,0.85)" },
+];
 
-/** 비즈가 박힌 PUF 스티커 */
+/** 투명 필름에 형광 비즈가 박힌 PUF 스티커 */
 function Sticker({ size, label = false }: { size: number; label?: boolean }) {
+  const k = size / 120;
   return (
-    <div className="relative rounded-2xl bg-[#e9f2f8] shadow-[0_10px_24px_rgba(15,42,61,0.18)] ring-1 ring-white" style={{ width: size, height: size }}>
-      <div className="absolute inset-[10%] rounded-xl bg-[#0f2a3d]">
-        {beads.map((b, i) => (
-          <span
-            key={i}
-            className={`${beadClass[b.speed]} absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-mid shadow-[0_0_10px_3px_rgba(125,211,252,0.7)]`}
-            style={{ left: `${b.x}%`, top: `${b.y}%`, width: b.s * (size / 120), height: b.s * (size / 120) }}
-          />
-        ))}
+    <div className="relative rounded-2xl" style={{ width: size, height: size }}>
+      {/* 투명 필름: 살짝 비치는 유리판 + 빛나는 테두리 + 비스듬한 반사광 */}
+      <div className="absolute inset-0 rounded-2xl bg-[linear-gradient(135deg,rgba(255,255,255,0.35)_0%,rgba(255,255,255,0.08)_45%,rgba(255,255,255,0.18)_100%)] shadow-[0_10px_24px_rgba(15,42,61,0.14),inset_0_0_0_1px_rgba(255,255,255,0.7),inset_0_1px_8px_rgba(255,255,255,0.35)] backdrop-blur-[2px]" />
+      <div className="absolute inset-[10%]">
+        {beads.map((b, i) => {
+          const p = phosphor[b.c];
+          const pos = { left: `${b.x}%`, top: `${b.y}%`, width: b.s * k, height: b.s * k };
+          return (
+            <span key={i}>
+              {/* 빛을 안 받았을 때도 희미하게 보이는 입자 */}
+              <span className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full opacity-45" style={{ ...pos, background: p.core }} />
+              {/* 플래시를 받으면 빛났다가 서서히 사라지는 잔광 */}
+              <span
+                className={`${beadClass[b.speed]} absolute -translate-x-1/2 -translate-y-1/2 rounded-full`}
+                style={{ ...pos, background: p.core, boxShadow: `0 0 ${10 * k}px ${3 * k}px ${p.glow}` }}
+              />
+            </span>
+          );
+        })}
       </div>
       {label && <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-semibold text-sub">PUF 스티커</span>}
     </div>
@@ -80,7 +100,7 @@ function FrontScreen() {
           <line x1="0" y1="64" x2="200" y2="64" stroke="rgba(255,255,255,0.15)" />
           {[25, 60, 140].map((tau, i) => (
             <path key={tau} d={curve(tau)} pathLength={1} fill="none" strokeWidth="2.2" strokeLinecap="round"
-              className="hero-curve" stroke={["#7dd3fc", "#38bdf8", "#e0f2fe"][i]} />
+              className="hero-curve" stroke={["#bef264", "#a3e635", "#ecfccb"][i]} />
           ))}
         </svg>
       </div>
