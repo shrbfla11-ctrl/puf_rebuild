@@ -5,6 +5,8 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
+import { UserMenu } from "@/components/auth/UserMenu";
+import type { UserSummary } from "@/lib/auth/user";
 
 const links = [
   { href: "/scan", label: "정품 확인" },
@@ -14,7 +16,7 @@ const links = [
 ];
 
 /** 상단 메뉴. 모바일에서는 햄버거 버튼으로 펼쳐요. */
-export function Nav() {
+export function Nav({ user }: { user: UserSummary | null }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -33,7 +35,7 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-1">
-          <Button href="/login" size="sm">시작하기</Button>
+          {user ? <UserMenu user={user} /> : <Button href="/login" size="sm">시작하기</Button>}
           <button
             type="button"
             aria-label="메뉴"

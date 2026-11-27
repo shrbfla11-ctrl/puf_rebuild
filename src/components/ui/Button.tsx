@@ -21,16 +21,17 @@ type Props = {
   full?: boolean;
   icon?: ReactNode;
   href?: string;
+  loading?: boolean;
   className?: string;
   children: ReactNode;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children">;
 
-/** 공용 버튼. href 가 있으면 링크, 없으면 <button> 으로 그려요. */
-export function Button({ variant = "primary", size = "lg", full, icon, href, className = "", children, ...rest }: Props) {
-  const cls = `inline-flex items-center justify-center gap-2 ${variants[variant]} ${sizes[size]} ${full ? "w-full" : ""} ${className}`;
+/** 공용 버튼. href 가 있으면 링크, 없으면 <button> 으로 그려요. loading 이면 빙글빙글 표시. */
+export function Button({ variant = "primary", size = "lg", full, icon, href, loading, className = "", children, disabled, ...rest }: Props) {
+  const cls = `inline-flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-70 ${variants[variant]} ${sizes[size]} ${full ? "w-full" : ""} ${className}`;
   const content = (
     <>
-      {icon}
+      {loading ? <span className="h-5 w-5 animate-spin rounded-full border-2 border-current/30 border-t-current" /> : icon}
       {children}
     </>
   );
@@ -43,7 +44,7 @@ export function Button({ variant = "primary", size = "lg", full, icon, href, cla
     );
   }
   return (
-    <button type="button" className={cls} {...rest}>
+    <button type="button" className={cls} disabled={disabled || loading} {...rest}>
       {content}
     </button>
   );
