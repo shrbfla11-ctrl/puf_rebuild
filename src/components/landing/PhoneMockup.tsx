@@ -24,8 +24,9 @@ function Sticker({ size, label = false }: { size: number; label?: boolean }) {
   const k = size / 120;
   return (
     <div className="relative rounded-2xl" style={{ width: size, height: size }}>
-      {/* 투명 필름: 살짝 비치는 유리판 + 빛나는 테두리 + 비스듬한 반사광 */}
-      <div className="absolute inset-0 rounded-2xl bg-[linear-gradient(135deg,rgba(255,255,255,0.35)_0%,rgba(255,255,255,0.08)_45%,rgba(255,255,255,0.18)_100%)] shadow-[0_10px_24px_rgba(15,42,61,0.14),inset_0_0_0_1px_rgba(255,255,255,0.7),inset_0_1px_8px_rgba(255,255,255,0.35)] backdrop-blur-[2px]" />
+      {/* 투명 필름: 칠 없이 얇은 테두리 + 가장자리 반사광만 (뒤 배경이 그대로 비쳐요) */}
+      <div className="absolute inset-0 rounded-2xl shadow-[0_8px_18px_-6px_rgba(15,42,61,0.18),inset_0_0_0_1px_rgba(15,42,61,0.16),inset_0_0_0_2px_rgba(255,255,255,0.55)]" />
+      <div className="absolute inset-[3px] rounded-[13px] bg-[linear-gradient(135deg,rgba(255,255,255,0.45)_0%,rgba(255,255,255,0)_22%,rgba(255,255,255,0)_78%,rgba(255,255,255,0.25)_100%)]" />
       <div className="absolute inset-[10%]">
         {beads.map((b, i) => {
           const p = phosphor[b.c];
@@ -192,7 +193,7 @@ export function PhoneMockup() {
         <div className="absolute bottom-[34px] left-[2px] [perspective:700px] sm:bottom-[44px] sm:left-[40px]">
           <div className="relative [transform:rotateX(58deg)_rotateZ(-18deg)]">
             <Sticker size={128} />
-            <span className="hero-flash pointer-events-none absolute -inset-4 rounded-3xl bg-sky-light/25 shadow-[0_0_50px_22px_rgba(125,211,252,0.65)]" />
+            <span className="hero-flash pointer-events-none absolute -inset-10 rounded-full bg-[radial-gradient(closest-side,rgba(186,230,253,0.6),rgba(186,230,253,0.25)_55%,rgba(186,230,253,0))]" />
           </div>
           <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-semibold text-sub">PUF 스티커</span>
         </div>
