@@ -35,6 +35,8 @@
   --animate-hl: kHl 6s ease-in-out infinite;
   --animate-check: kCheck 6s ease-in-out infinite;
   --animate-card: kCard 6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  --animate-glow: kGlow 4s ease-out infinite;
+  --animate-halo: kHalo 6s ease-in-out infinite;
 
   @keyframes kScan {
     0% { top: 0; opacity: 1; }
@@ -51,6 +53,16 @@
     0%, 46% { opacity: 0; transform: scale(0.6); }
     54%, 92% { opacity: 1; transform: scale(1); }
     100% { opacity: 0; }
+  }
+  /* 발광 비즈: 확 밝아졌다가 천천히 어두워져요 (잔광) */
+  @keyframes kGlow {
+    0%, 6% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.12; transform: scale(0.7); }
+  }
+  /* 아이폰 뒤 후광이 은은하게 커졌다 작아져요 */
+  @keyframes kHalo {
+    0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.92); }
+    50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.05); }
   }
   @keyframes kCard {
     0%, 52% { transform: translateY(110%); opacity: 0; }
@@ -82,7 +94,23 @@ html {
   scroll-behavior: smooth;
 }
 
+/* 스크롤하면 아래에서 떠오르는 효과 (자바스크립트가 켜져 있을 때만) */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
   html {
     scroll-behavior: auto;
   }

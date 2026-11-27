@@ -13,7 +13,11 @@ export const metadata: Metadata = {
 // 모든 페이지를 감싸는 가장 바깥 틀
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" className="h-full">
+    <html lang="ko" className="h-full" suppressHydrationWarning>
+      <head>
+        {/* 자바스크립트가 켜져 있으면 스크롤 등장 효과를 써요 */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

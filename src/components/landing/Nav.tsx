@@ -21,12 +21,12 @@ export function Nav({ user }: { user: UserSummary | null }) {
 
   return (
     <header className="sticky top-0 z-20 border-b border-line/70 bg-white/85 backdrop-blur">
-      <div className="mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between px-5 lg:px-8">
-        <Link href="/" aria-label="PUF 홈" className="text-xl">
+      <div className="mx-auto flex h-14 w-full max-w-[1100px] items-center justify-between px-5 lg:px-8">
+        <Link href="/" aria-label="PUF 홈" className="text-lg">
           <Logo />
         </Link>
 
-        <nav className="hidden gap-9 text-[15px] font-medium lg:flex">
+        <nav className="hidden gap-9 text-sm font-medium lg:flex">
           {links.map((l) => (
             <Link key={l.href} href={l.href} className="text-sub hover:text-sky">
               {l.label}

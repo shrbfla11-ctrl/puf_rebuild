@@ -14,9 +14,9 @@ export default async function Home() {
       <main>
         <Hero />
         <HowItWorks />
+        <Trust />
         <ResultPreview />
         <Features />
-        <Trust />
         <Faq />
         <Cta />
       </main>
