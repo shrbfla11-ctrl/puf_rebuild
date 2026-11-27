@@ -119,10 +119,10 @@ html {
   }
 }
 
-/* ───────── 첫 화면 휴대폰 애니메이션 (14초 반복) ─────────
+/* ───────── 첫 화면 휴대폰 애니메이션 (12초 반복) ─────────
    옆모습에서 플래시 → 스티커 충전 → 부드럽게 돌아 앞면 → 연속 촬영·감쇠 그래프 → 정품 판정 → 다시 옆모습 */
 .hero-anim * {
-  animation-duration: 14s;
+  animation-duration: 12s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
 }
