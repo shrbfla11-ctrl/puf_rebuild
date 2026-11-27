@@ -41,10 +41,18 @@ export function HowItWorks() {
 }
 
 // 비즈 위치·감쇠 시간. 매번 같은 모양이 나오도록 고정된 규칙으로 만들어요.
+// 형광 입자 색: 연두 · 라임 · 노랑빛 초록 · 초록 (첫 화면 스티커와 같은 색)
+const phosphor = [
+  { core: "#d9f99d", glow: "rgba(190,242,100,0.6)" },
+  { core: "#bef264", glow: "rgba(163,230,53,0.6)" },
+  { core: "#ecfccb", glow: "rgba(234,250,120,0.6)" },
+  { core: "#a3e635", glow: "rgba(132,204,22,0.6)" },
+];
+
 const beads = Array.from({ length: 46 }, (_, i) => {
   // 브라우저마다 소수점 끝자리가 달라지지 않게 반올림해요.
   const r = (n: number) => Math.round((((Math.sin(i * 12.9898 + n * 78.233) * 43758.5453) % 1) + 1) % 1 * 1000) / 1000;
-  return { x: 4 + r(1) * 92, y: 6 + r(2) * 88, size: 6 + r(3) * 12, duration: 2.2 + r(4) * 4.5, delay: r(5) * 3 };
+  return { x: 4 + r(1) * 92, y: 6 + r(2) * 88, size: 6 + r(3) * 12, duration: 2.2 + r(4) * 4.5, delay: r(5) * 3, c: i % 4 };
 });
 
 /** 남색 섹션: 비즈마다 다른 속도로 잔광이 사라지는 장면 + 숫자 */
@@ -62,8 +70,8 @@ export function Trust() {
             {beads.map((b, i) => (
               <span
                 key={i}
-                className="motion-safe-anim absolute animate-glow rounded-full bg-sky-mid shadow-[0_0_18px_6px_rgba(125,211,252,0.55)]"
-                style={{ left: `${b.x}%`, top: `${b.y}%`, width: b.size, height: b.size, animationDuration: `${b.duration}s`, animationDelay: `${b.delay}s` }}
+                className="motion-safe-anim absolute animate-glow rounded-full"
+                style={{ left: `${b.x}%`, top: `${b.y}%`, width: b.size, height: b.size, background: phosphor[b.c].core, boxShadow: `0 0 18px 6px ${phosphor[b.c].glow}`, animationDuration: `${b.duration}s`, animationDelay: `${b.delay}s` }}
               />
             ))}
             <span className="absolute bottom-4 left-5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur">
