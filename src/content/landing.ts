@@ -25,17 +25,17 @@ export const resultPreview = {
   label: "인증 결과",
   title: "결과는 이렇게 보여드려요",
   badge: "정품",
-  category: "인증 결과 예시",
-  product: "예시 제품",
-  maker: "예시 제조사 · 시리얼 PUF-0000",
-  tags: ["패턴 일치", "첫 인증", "유통 정상"],
+  category: "반도체 · 칩 릴 방습 포장 봉인",
+  product: "MCU 칩 릴 (3,000개)",
+  maker: "예시 반도체 · Lot A26-0815",
+  tags: ["패턴 일치", "봉인 정상", "최초 인증"],
   facts: [
     { label: "판정", value: "정품", ok: true },
-    { label: "인증 횟수", value: "1회" },
-    { label: "최초 인증", value: "2026.01.01" },
+    { label: "봉인 상태", value: "미개봉" },
+    { label: "Date Code", value: "2601" },
   ],
   warningTitle: "이럴 땐 주의하세요",
-  warning: "패턴이 원본과 맞지 않거나 같은 스티커가 여러 번 인증됐다면 위조나 재사용일 수 있어요. 결과 화면과 함께 구매처에 문의해 주세요.",
+  warning: "봉인 스티커가 찢어졌거나 패턴이 원본과 맞지 않으면 포장이 열렸거나 내용물이 바뀌었을 수 있어요. 입고하기 전에 공급처에 확인해 주세요.",
 };
 
 export const features = {

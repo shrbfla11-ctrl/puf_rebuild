@@ -118,3 +118,106 @@ html {
     animation: none !important;
   }
 }
+
+/* ───────── 첫 화면 휴대폰 애니메이션 (14초 반복) ─────────
+   옆모습에서 플래시 → 스티커 충전 → 부드럽게 돌아 앞면 → 연속 촬영·감쇠 그래프 → 정품 판정 → 다시 옆모습 */
+.hero-anim * {
+  animation-duration: 14s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+.hero-phone { transform-style: preserve-3d; animation-name: hPhone; }
+.hero-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.hero-float { animation: hFloat 7s ease-in-out infinite !important; transform-style: preserve-3d; }
+.hero-shadow { animation-name: hShadow; }
+.hero-flash { opacity: 0; animation-name: hFlash; animation-timing-function: linear; }
+.hero-bead-fast { opacity: 0.5; animation-name: hBeadFast; }
+.hero-bead-mid { opacity: 0.6; animation-name: hBeadMid; }
+.hero-bead-slow { opacity: 0.7; animation-name: hBeadSlow; }
+.hero-bar { width: 100%; animation-name: hBar; animation-timing-function: steps(15, end); }
+.hero-curve { stroke-dasharray: 1; stroke-dashoffset: 0; animation-name: hCurve; animation-timing-function: linear; }
+.hero-check { animation-name: hCheck; }
+.hero-card { animation-name: hCard; }
+.hero-step1 { animation-name: hStep1; }
+.hero-step2 { animation-name: hStep2; }
+.hero-step3 { animation-name: hStep3; }
+
+/* 애플 광고처럼: 천천히 출발해 부드럽게 멈추는 회전 */
+@keyframes hPhone {
+  /* 옆모습으로 서 있다가 → 스티커 쪽으로 살짝 숙여 플래시 → 다시 세우며 앞면으로 */
+  0% { transform: rotateZ(0deg) rotateY(90deg); animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1); }
+  7%, 25% { transform: rotateZ(-17deg) rotateY(90deg); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  41% { transform: rotateZ(1deg) rotateY(-5deg); animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1); }
+  45%, 86% { transform: rotateZ(0deg) rotateY(0deg); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  97%, 100% { transform: rotateZ(0deg) rotateY(90deg); }
+}
+@keyframes hFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes hShadow {
+  0%, 27% { transform: translateX(-50%) scaleX(0.35); opacity: 0.55; }
+  43%, 86% { transform: translateX(-50%) scaleX(1); opacity: 0.4; }
+  97%, 100% { transform: translateX(-50%) scaleX(0.35); opacity: 0.55; }
+}
+@keyframes hFlash {
+  0%, 6% { opacity: 0; }
+  8%, 25% { opacity: 1; }
+  27%, 100% { opacity: 0; }
+}
+@keyframes hBeadFast {
+  0%, 6% { opacity: 0.12; }
+  12%, 26% { opacity: 1; }
+  38%, 100% { opacity: 0.12; }
+}
+@keyframes hBeadMid {
+  0%, 6% { opacity: 0.12; }
+  12%, 26% { opacity: 1; }
+  54%, 100% { opacity: 0.12; }
+}
+@keyframes hBeadSlow {
+  0%, 6% { opacity: 0.12; }
+  12%, 26% { opacity: 1; }
+  78%, 100% { opacity: 0.15; }
+}
+@keyframes hBar {
+  0%, 30% { width: 0%; }
+  60%, 100% { width: 100%; }
+}
+@keyframes hCurve {
+  0%, 44% { stroke-dashoffset: 1; }
+  62%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes hCheck {
+  0%, 62% { opacity: 0; transform: scale(0.6); }
+  65%, 86% { opacity: 1; transform: scale(1); }
+  89%, 100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes hCard {
+  0%, 63% { opacity: 0; transform: translateY(24px); }
+  67%, 86% { opacity: 1; transform: translateY(0); }
+  89%, 100% { opacity: 0; transform: translateY(24px); }
+}
+@keyframes hStep1 {
+  0%, 4% { opacity: 0.35; }
+  7%, 27% { opacity: 1; }
+  30%, 100% { opacity: 0.35; }
+}
+@keyframes hStep2 {
+  0%, 27% { opacity: 0.35; }
+  30%, 61% { opacity: 1; }
+  64%, 100% { opacity: 0.35; }
+}
+@keyframes hStep3 {
+  0%, 61% { opacity: 0.35; }
+  64%, 88% { opacity: 1; }
+  92%, 100% { opacity: 0.35; }
+}
+
+/* 움직임을 줄이는 설정이면: 앞면 + 판정 완료 화면으로 멈춰 있어요 */
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim *,
+  .hero-float {
+    animation: none !important;
+  }
+}

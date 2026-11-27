@@ -93,10 +93,17 @@ export function ResultPreview() {
       <SectionTitle label={r.label} title={r.title} />
       <Reveal className="mt-14 lg:mt-20">
         <div className="mx-auto grid max-w-[960px] overflow-hidden rounded-[32px] bg-soft lg:grid-cols-[1fr_1.1fr]">
-          <div className="relative flex min-h-[260px] items-center justify-center bg-gradient-to-br from-sky-light to-soft">
-            <div className="relative flex h-40 w-40 items-center justify-center rounded-3xl bg-white shadow-float">
-              <span className="absolute inset-3.5 rounded-2xl bg-[radial-gradient(circle,#7dd3fc_1.4px,transparent_1.7px)] [background-size:10px_10px]" />
-              <span className="relative rounded bg-white px-2.5 py-1 text-lg font-bold tracking-[0.14em] text-sky-dark">PUF</span>
+          <div className="relative flex min-h-[300px] items-center justify-center bg-gradient-to-br from-sky-light to-soft">
+            {/* 칩 릴: 부품 테이프가 감긴 둥근 판 + 가운데 축 */}
+            <div aria-hidden="true" className="relative h-56 w-56 rounded-full bg-[radial-gradient(circle,#e9f1f7_0%,#d7e3ec_60%,#c3d2de_100%)] shadow-float ring-1 ring-white">
+              <span className="absolute inset-[18%] rounded-full bg-[repeating-radial-gradient(circle,#0f2a3d_0px,#0f2a3d_2px,#1c4361_2px,#1c4361_4px)] opacity-90" />
+              <span className="absolute inset-[38%] rounded-full bg-[#eef4f8] ring-4 ring-[#c3d2de]" />
+              <span className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#9fb2c1]" />
+              {/* 릴에 붙인 PUF 스티커 */}
+              <div className="absolute -right-3 top-3 flex h-[72px] w-[72px] rotate-6 items-center justify-center rounded-xl bg-white shadow-card ring-1 ring-line">
+                <span className="absolute inset-2 rounded-lg bg-[radial-gradient(circle,#7dd3fc_1.2px,transparent_1.5px)] [background-size:7px_7px]" />
+                <span className="relative rounded bg-white px-1.5 text-[11px] font-bold tracking-[0.14em] text-sky-dark">PUF</span>
+              </div>
             </div>
             <span className="absolute left-5 top-5 inline-flex items-center gap-1.5 rounded-full bg-ok px-3 py-1.5 text-sm font-bold text-white">
               <BadgeCheck size={16} />
